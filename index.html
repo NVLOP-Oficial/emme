@@ -178,8 +178,13 @@ footer img{height:36px;opacity:.4}
 .play-btn{position:relative;width:36px;height:36px;border-radius:50%;background:var(--accent);flex:none}
 .play-btn::after{content:'';position:absolute;left:14px;top:10px;border-left:12px solid var(--bg);border-top:8px solid transparent;border-bottom:8px solid transparent}
 .listen{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
-.sc-grid{display:grid;gap:12px;max-width:760px}
-.sc-grid iframe{border:1px solid var(--border);border-radius:2px;background:var(--card)}
+.sc-box{max-width:760px}
+.sc-box iframe{display:block;border:1px solid var(--border);border-radius:2px;background:var(--card)}
+.sc-list{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.sc-opt{display:flex;align-items:center;gap:10px;padding:10px 18px;background:var(--card);border:1px solid var(--border);border-radius:2px;color:var(--dim);font:inherit;font-size:13px;cursor:pointer;transition:all .2s}
+.sc-opt span{font-family:'Playfair Display',serif;font-style:italic;color:var(--accent)}
+.sc-opt:hover{border-color:var(--accent);color:var(--text)}
+.sc-opt.act{border-color:var(--accent);color:var(--text);background:rgba(200,160,240,.1)}
 .sc-profile{display:inline-block;margin-top:22px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);text-decoration:none}
 .credit{grid-column:1/-1;font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--dim)}
 .credit a,.event-venue a{color:var(--accent);text-decoration:none}
@@ -262,7 +267,7 @@ footer img{height:36px;opacity:.4}
 
 <div class="section" id="live">
   <div class="sec-label">Galería · En vivo</div>
-  <div class="rg" data-rg data-interval="4500">
+  <div class="rg" data-rg data-interval="3500">
     <div class="rg-stage">
       <div class="rg-bg"></div><div class="rg-bg"></div>
       <img class="rg-img" alt=""><img class="rg-img" alt="">
@@ -277,7 +282,7 @@ footer img{height:36px;opacity:.4}
   <p class="rg-credit">Fotos: <a href="https://www.instagram.com/chinita.ph_edits" target="_blank">@chinita.ph_edits</a> · Madness</p>
 </div><div class="section" id="gallery">
   <div class="sec-label">Galería · Estudio</div>
-  <div class="rg" data-rg data-interval="4500">
+  <div class="rg" data-rg data-interval="3500">
     <div class="rg-stage">
       <div class="rg-bg"></div><div class="rg-bg"></div>
       <img class="rg-img" alt=""><img class="rg-img" alt="">
@@ -296,7 +301,10 @@ footer img{height:36px;opacity:.4}
   <div class="sec-label">Música</div>
   <div class="music-embed">
     
-    <div class="sc-grid"><iframe width="100%" height="166" scrolling="no" frameborder="0" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/florencia-rosatto/emme-7&color=%23c8a0f0&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe> <iframe width="100%" height="166" scrolling="no" frameborder="0" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/florencia-rosatto/emme-8&color=%23c8a0f0&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe> <iframe width="100%" height="166" scrolling="no" frameborder="0" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/florencia-rosatto/john-doe-2410&color=%23c8a0f0&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe></div>
+    <div class="sc-box" data-sc>
+      <iframe width="100%" height="166" scrolling="no" frameborder="0" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/florencia-rosatto/emme-7&color=%23c8a0f0&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+      <div class="sc-list"><button type="button" class="sc-opt act" data-src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/florencia-rosatto/emme-7&color=%23c8a0f0&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"><span>01</span>EMME 7</button><button type="button" class="sc-opt" data-src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/florencia-rosatto/emme-8&color=%23c8a0f0&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"><span>02</span>EMME 8</button><button type="button" class="sc-opt" data-src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/florencia-rosatto/john-doe-2410&color=%23c8a0f0&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"><span>03</span>John Doe</button></div>
+    </div>
     <a class="sc-profile" href="https://soundcloud.com/florencia-rosatto" target="_blank">Ver perfil en SoundCloud ↗</a>
     <p class="drops-label">Drops · Flor B2B Juan</p>
     <div class="drops">
@@ -311,19 +319,10 @@ footer img{height:36px;opacity:.4}
   <div class="sec-label">Rider técnico</div>
 
   <div class="rider-type-label">Rider principal <span>CDJ-3000 x3 · DJM-V10</span></div>
-  <div class="rider-cards">
-    
-      <div class="rider-card"><div class="rider-card-img"><img src="assets/cdj3000.png" alt=""></div><div class="rider-card-body"><div class="rider-card-tag">Pioneer DJ · x3</div><div class="rider-card-name">CDJ-3000</div><div class="rider-card-desc">Multi Player profesional</div></div></div>
-      <div class="rider-card"><div class="rider-card-img"><img src="assets/djmv10.png" alt=""></div><div class="rider-card-body"><div class="rider-card-tag">Pioneer DJ · x1</div><div class="rider-card-name">DJM-V10</div><div class="rider-card-desc">Mixer de 6 canales</div></div></div>
-  </div>
+  
 
   <div class="rider-type-label" style="margin-top:12px">Rider alternativo <span>DJM-900NXS2 · DJM-A9 · CDJ-2000NXS2 x2</span></div>
-  <div class="rider-cards">
-    
-      <div class="rider-card"><div class="rider-card-img"><img src="assets/djm900.png" alt=""></div><div class="rider-card-body"><div class="rider-card-tag">Pioneer DJ · x1</div><div class="rider-card-name">DJM-900NXS2</div><div class="rider-card-desc">Mixer de 4 canales</div></div></div>
-      <div class="rider-card"><div class="rider-card-img"><img src="assets/djma9.png" alt=""></div><div class="rider-card-body"><div class="rider-card-tag">Pioneer DJ · x1</div><div class="rider-card-name">DJM-A9</div><div class="rider-card-desc">Mixer de 4 canales</div></div></div>
-      <div class="rider-card"><div class="rider-card-img"><img src="assets/cdj2000.png" alt=""></div><div class="rider-card-body"><div class="rider-card-tag">Pioneer DJ · x2</div><div class="rider-card-name">CDJ-2000NXS2</div><div class="rider-card-desc">Multi Player</div></div></div>
-  </div>
+  
   <a class="rider-download" href="EMME_RIDER_TECNICO.pdf" target="_blank">↓ Descargar rider técnico (PDF)</a>
 </div>
 
@@ -354,7 +353,7 @@ footer img{height:36px;opacity:.4}
     var imgs = root.querySelectorAll('.rg-img'), bgs = root.querySelectorAll('.rg-bg');
     var ths = root.querySelectorAll('.rg-th'), rail = root.querySelector('.rg-rail');
     var num = root.querySelector('.rg-count b'), bar = root.querySelector('.rg-bar i');
-    var iv = +root.dataset.interval || 4500, cur = -1, front = 1, timer = null, visible = false;
+    var iv = +root.dataset.interval || 3500, cur = -1, front = 1, timer = null, visible = false;
     function pad(n) { return (n < 10 ? '0' : '') + n; }
     function show(i) {
       i = (i + data.length) % data.length;
@@ -384,8 +383,6 @@ footer img{height:36px;opacity:.4}
     root.querySelector('.rg-prev').addEventListener('click', function () { go(cur - 1); });
     root.querySelector('.rg-next').addEventListener('click', function () { go(cur + 1); });
     ths.forEach(function (t, i) { t.addEventListener('click', function () { go(i); }); });
-    root.addEventListener('mouseenter', function () { root.classList.add('hov'); clearTimeout(timer); });
-    root.addEventListener('mouseleave', function () { root.classList.remove('hov'); show(cur); tick(); });
     root.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') go(cur - 1); if (e.key === 'ArrowRight') go(cur + 1); });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) { bar.style.animation = 'none'; void bar.offsetWidth; if (!reduce) bar.style.animation = 'rgbar ' + iv + 'ms linear forwards'; } tick(); }, { threshold: .25 }).observe(root);
@@ -393,5 +390,5 @@ footer img{height:36px;opacity:.4}
     show(0); tick();
   });
 })();
-</script><div class="draft-tag">Borrador · Presskit Pro</div></body>
+</script><script>document.querySelectorAll('[data-sc]').forEach(function (box) { var fr = box.querySelector('iframe'); box.querySelectorAll('.sc-opt').forEach(function (b) { b.addEventListener('click', function () { box.querySelectorAll('.sc-opt').forEach(function (o) { o.classList.remove('act'); }); b.classList.add('act'); fr.src = b.dataset.src; }); }); });</script><div class="draft-tag">Borrador · Presskit Pro</div></body>
 </html>
