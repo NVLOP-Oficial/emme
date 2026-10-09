@@ -132,6 +132,15 @@ footer img{height:36px;opacity:.4}
 .nvlop-credit:hover .nv-word{letter-spacing:.26em}
 
 .bio-photo{width:100%;display:block;border:1px solid var(--border);border-radius:2px}
+.gig{display:flex;align-items:center;gap:22px;padding:18px 22px;background:var(--card);border:1px solid var(--border);border-radius:2px;margin-bottom:10px}
+.gig-date{flex:none;width:88px;display:flex;align-items:center;gap:10px}
+.gig-d{font-family:'Playfair Display',serif;font-weight:700;font-size:38px;color:var(--accent);line-height:1}
+.gig-m{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);line-height:1.5}
+.gig-name{font-family:'Playfair Display',serif;font-weight:600;font-size:20px}
+.gig-where{font-size:13px;color:var(--dim);margin-top:2px}
+.gig a{margin-left:auto;flex:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--accent);padding:10px 16px}
+.gigs-empty{color:var(--dim);font-size:15px;font-weight:300}.gigs-empty strong{display:block;font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:20px;color:var(--text);margin-bottom:6px}
+@media(max-width:768px){.gig{flex-wrap:wrap;gap:12px}.gig a{margin-left:0}}
 .press-cta{text-align:center;padding-top:0!important}
 
 /* galeria rotativa */
@@ -219,7 +228,7 @@ footer img{height:36px;opacity:.4}
   <a href="#" class="nav-logo"><img src="assets/logo.svg" alt="EMME"></a>
   <div class="nav-links">
     <a href="#bio">Artista</a>
-    
+    <a href="#fechas">Fechas</a>
     <a href="#live">En vivo</a> <a href="#gallery">Estudio</a>
     <a href="#music">Música</a>
     <a href="#rider">Rider</a>
@@ -308,6 +317,11 @@ footer img{height:36px;opacity:.4}
   </div>
 </div>
 
+<div class="section" id="fechas">
+  <div class="sec-label">Próximas fechas</div>
+  <div id="gigs"><p class="gigs-empty">Cargando…</p></div>
+</div>
+
 <div class="section" id="rider">
   <div class="sec-label">Rider técnico</div>
 
@@ -383,5 +397,40 @@ footer img{height:36px;opacity:.4}
     show(0); tick();
   });
 })();
-</script><script>document.querySelectorAll('[data-sc]').forEach(function (box) { var fr = box.querySelector('iframe'); box.querySelectorAll('.sc-opt').forEach(function (b) { b.addEventListener('click', function () { box.querySelectorAll('.sc-opt').forEach(function (o) { o.classList.remove('act'); }); b.classList.add('act'); fr.src = b.dataset.src; }); }); });</script><div class="draft-tag">Borrador · Presskit Pro</div></body>
+</script><script>document.querySelectorAll('[data-sc]').forEach(function (box) { var fr = box.querySelector('iframe'); box.querySelectorAll('.sc-opt').forEach(function (b) { b.addEventListener('click', function () { box.querySelectorAll('.sc-opt').forEach(function (o) { o.classList.remove('act'); }); b.classList.add('act'); fr.src = b.dataset.src; }); }); });</script><script>
+(function () {
+  var SHEET = '1FkqFs0dQRh92JSlmXLtQMuqh_gY-9vnSQw2eGwfIdUY', box = document.getElementById('gigs'), MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  function empty(msg) { box.innerHTML = '<div class="gigs-empty"><strong>' + msg + '</strong>Consultá disponibilidad con el equipo de booking.</div>'; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function parseDate(c) {
+    if (!c || c.v == null) return null; var v = c.v, a;
+    if (typeof v !== 'string') return null;
+    v = v.trim();
+    if (v.indexOf('Date(') === 0) { a = v.slice(5).split(')')[0].split(','); return new Date(+a[0], +a[1], +a[2]); }
+    if (v.indexOf('-') === 4) { a = v.slice(0, 10).split('-'); return new Date(+a[0], +a[1] - 1, +a[2]); }
+    a = v.split(/[/.-]/);
+    if (a.length < 2) return null;
+    var y = a[2] ? +a[2] : new Date().getFullYear(); if (y < 100) y += 2000;
+    return new Date(y, +a[1] - 1, +a[0]);
+  }
+  function txt(c) { return c && c.v != null ? String(c.f != null ? c.f : c.v).trim() : ''; }
+  function safeUrl(u) { if (u && u.indexOf('http') !== 0) u = 'https://' + u; return /^https?:[/][/][^ "<>]+$/i.test(u) ? u : ''; }
+  fetch('https://docs.google.com/spreadsheets/d/' + SHEET + '/gviz/tq?tqx=out:json&headers=1', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+    .then(function (t) {
+      var d = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1)), today = new Date(); today.setHours(0, 0, 0, 0);
+      var gigs = (d.table.rows || []).map(function (r) { var c = r.c || []; return { d: parseDate(c[0]), name: txt(c[1]), where: txt(c[2]), city: txt(c[3]), url: safeUrl(txt(c[4])) }; })
+        .filter(function (g) { return g.d && !isNaN(g.d) && g.d >= today && (g.name || g.where); })
+        .sort(function (a, b) { return a.d - b.d; });
+      if (!gigs.length) return empty('Nuevas fechas muy pronto');
+      box.innerHTML = gigs.map(function (g) {
+        var place = [g.where, g.city].filter(Boolean).map(esc).join(' · ');
+        return '<div class="gig"><div class="gig-date"><span class="gig-d">' + String(g.d.getDate()).padStart(2, '0') + '</span><span class="gig-m">' + MES[g.d.getMonth()] + '<br>' + g.d.getFullYear() + '</span></div>' +
+          '<div><div class="gig-name">' + esc(g.name || g.where) + '</div><div class="gig-where">' + place + '</div></div>' +
+          (g.url ? '<a href="' + g.url + '" target="_blank" rel="noopener">Info / Tickets ↗</a>' : '') + '</div>';
+      }).join('');
+    })
+    .catch(function () { empty('Agenda en actualización'); });
+})();
+</script><div class="draft-tag">Borrador · Presskit Pro</div></body>
 </html>
